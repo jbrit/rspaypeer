@@ -1,0 +1,25 @@
+{
+  "name": "paypeer",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "ajibola ojo",
+    "email": "hey@ajibolaojo.com",
+    "url": "https://github.com/jbrit/"
+  },
+  "repository": {
+    "url": "https://github.com/jbrit/rspaypeer"
+  },
+  "description": "The purpose of this contract is to create a stable curve based pool for swaps on solana.\n\nreference math:\n  - [Understanding StableSwap Curve](https://miguelmota.com/blog/understanding-stableswap-curve/)",
+  "dependencies": {
+    "@solana/spl-token": "^0.4.0",
+    "@solana/web3.js": "^1.78.3",
+    "borsh": "^1.0.0",
+    "bs58": "^5.0.0",
+    "typescript": "^5.1.6"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

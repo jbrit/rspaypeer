@@ -1,0 +1,98 @@
+cidl: "0.8"
+info:
+  name: paypeer
+  title: Paypeer
+  version: 0.0.1
+  summary: |-
+    The purpose of this contract is to create a stable curve based pool for swaps on solana.
+    
+    reference math:
+      - [Understanding StableSwap Curve](https://miguelmota.com/blog/understanding-stableswap-curve/)
+  contact:
+    name: ajibola ojo
+    web: https://github.com/jbrit/
+    email: hey@ajibolaojo.com
+    git: https://github.com/jbrit/rspaypeer
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+types:
+  SwapAuthority:
+    solana:
+      owner: self
+      seeds:
+        - name: swapauthority
+    fields:
+      - name: random
+        type: u8
+  Pool:
+    summary: store the relevant information to track the info for the pool.
+    solana:
+      owner: self
+      seeds:
+        - name: pool
+    fields:
+      - name: ngn
+        type: sol:pubkey
+      - name: usd
+        type: sol:pubkey
+
+methods:
+  - name: set_pool
+    summary: Initialize a Pool account for this contract.
+    solana:
+      signers:
+        - name: fee_payer
+    inputs:
+      - name: swap_authority
+        type: SwapAuthority
+        solana:
+          attributes: [ mut, init_if_needed ]
+          signers:
+            signer: fee_payer
+      - name: pool
+        type: Pool
+        solana:
+          attributes: [ mut, init_if_needed ]
+          signers:
+            signer: fee_payer
+      - name: ngn_mint
+        type: sol:pubkey
+      - name: usd_mint
+        type: sol:pubkey
+
+  - name: swap
+    summary: Initialize Swap
+    inputs:
+      - name: amount_in
+        type: u64
+      - name: min_amount_out
+        type: u64
+      - name: pool
+        type: Pool
+      - name: token_program
+        type: sol:account_info
+      - name: user_authority
+        type: sol:account_info
+      - name: user_source
+        type: sol:account_info
+        solana:
+          attributes: [ mut ]
+      - name: user_destination
+        type: sol:account_info
+        solana:
+          attributes: [ mut ]
+      - name: swap_authority
+        type: SwapAuthority
+        solana:
+          attributes: [ mut, init_if_needed ]
+          signers:
+            signer: fee_payer
+      - name: swap_source
+        type: sol:account_info
+        solana:
+          attributes: [ mut ]
+      - name: swap_destination
+        type: sol:account_info
+        solana:
+          attributes: [ mut ]
