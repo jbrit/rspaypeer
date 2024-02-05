@@ -56,8 +56,14 @@ pub fn swap<'info>(
 	];
 	invoke(&transfer_in_inst, &transfer_in_accounts)?;
 	
-	let amount_out = 0;
-	// TODO: implement actual amount out / swap logic
+	let virtual_price = 1400;
+
+	let amount_out = if swap_source.key == &Pubkey::try_from("CLiARrhtW3dcudjhWNLZPivAVzMDhMjaWjti6Bw1g2MV").unwrap() {  // user destination is usd
+		amount_in / virtual_price
+	} else {
+		amount_in * virtual_price
+	};
+
 
 	if amount_out < min_amount_out{
 		panic!("amount out less than expected")
